@@ -1,4 +1,6 @@
+import 'express-async-errors';
 import * as express from 'express';
+import UserRouters from './routes';
 
 class App {
   public app: express.Express;
@@ -17,6 +19,7 @@ class App {
       res.header('Access-Control-Allow-Origin', '*');
       res.header('Access-Control-Allow-Methods', 'GET,POST,DELETE,OPTIONS,PUT,PATCH');
       res.header('Access-Control-Allow-Headers', '*');
+      this.app.use(UserRouters);
       next();
     };
 
