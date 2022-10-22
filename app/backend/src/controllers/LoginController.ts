@@ -11,12 +11,7 @@ class LoginController {
 
   public async auth(req: Request<unknown, unknown, LoginDto>, res: Response) {
     try {
-      const { email, password } = req.body;
-      if (!email || !password) {
-        return res.status(400).json({ message: 'All fields must be filled' });
-      }
       const token = await this.loginService.authentication(req.body);
-      // console.log('essssse');
       if (!token) {
         return res.status(401).json({ message: 'Incorrect email or password' });
       }
