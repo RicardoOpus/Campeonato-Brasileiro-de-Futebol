@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 class LoginMiddleware {
   public verify = (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
-    const emailRegEx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    const emailRegEx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email || !password) {
       return res.status(400).json({ message: 'All fields must be filled' });
     }

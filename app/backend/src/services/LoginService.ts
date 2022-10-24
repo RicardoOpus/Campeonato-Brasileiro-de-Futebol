@@ -20,7 +20,7 @@ class LoginService {
     if (!passwordHash) {
       return null;
     }
-    // Gerar o token
+    // Gera o token
     const jwtHeader: IJWTHeaderDto = {
       username: user.username,
       email: user.email,

@@ -6,7 +6,7 @@ import { IJWTHeaderDto } from '../controllers/dto/IJWTHeaderDto';
 const SECRET = process.env.SECRET || 'jwt_secret';
 
 const jwtDefaultConfig: SignOptions = {
-  expiresIn: '15m',
+  expiresIn: '60m',
   algorithm: 'HS256',
 };
 
