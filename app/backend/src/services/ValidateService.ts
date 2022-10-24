@@ -8,8 +8,12 @@ class ValidateService {
   }
 
   public async findRole(token: string) {
-    const { role } = this.jwtMet.verify(token, process.env.JWT_SECRET as string) as IJWTHeaderDto;
-    return { code: 200, data: { role } };
+    try {
+      const { role } = this.jwtMet.verify(token, process.env.JWT_SECRET as string) as IJWTHeaderDto;
+      return { code: 200, data: { role } };
+    } catch (error) {
+      return { code: 400, data: { message: 'invalid token' } };
+    }
   }
 }
 
