@@ -1,4 +1,5 @@
 import * as bcrypt from 'bcryptjs';
+import ResponseDto from '../controllers/dto/ResponseDto';
 import TokenGenerator from '../shared/TokenGenerator';
 import LoginDto from '../controllers/dto/LoginDto';
 import User from '../database/models/users';
@@ -11,7 +12,7 @@ class LoginService {
     this._userModel = User;
   }
 
-  public async authentication(loginDto: LoginDto) {
+  public async authentication(loginDto: LoginDto): Promise<ResponseDto> {
     const user = await this._userModel.findOne({
       where: { email: loginDto.email },
     });

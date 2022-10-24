@@ -1,4 +1,5 @@
 import * as jwt from 'jsonwebtoken';
+import ResponseDto from '../controllers/dto/ResponseDto';
 import { IJWTHeaderDto } from '../controllers/dto/IJWTHeaderDto';
 
 class ValidateService {
@@ -7,7 +8,7 @@ class ValidateService {
     this.jwt = jwt;
   }
 
-  public async findRole(token: string) {
+  public async findRole(token: string): Promise<ResponseDto> {
     try {
       const { role } = await this.jwt
         .verify(token, process.env.JWT_SECRET as string) as IJWTHeaderDto;
