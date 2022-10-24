@@ -2,10 +2,16 @@ import * as chai from 'chai';
 // @ts-ignore
 import chaiHttp = require('chai-http');
 import * as Sinon from 'sinon';
+import * as bcrypt from 'bcryptjs';
 import { app } from '../app'
 import User from '../database/models/users'
 import { Response } from 'superagent';
-import {userDefaultMock, loginMock, loginInvalidEmail, loginInvalidPassword} from './mocks/userMock'
+import {userDefaultMock, 
+  loginMock,
+  loginInvalidEmail,
+  loginInvalidPassword,
+  loginInvalidMock,
+  loginWrongPassword} from './mocks/userMock'
 
 chai.use(chaiHttp);
 
@@ -52,8 +58,42 @@ describe('TESTES DA ROTA /login', () => {
       expect(result.body).to.be.deep.equal({message: "password is too short"})
     })
   })
+  describe('Testa usuário inexistentes', () => {
+    let chaiHttpResponse: Response;   
+    
+    before(async() => {
+      Sinon.stub(User, 'findOne').resolves(undefined)
+    });
+    after(async() => {
+        (User.findOne as Sinon.SinonStub).restore();
+      });
+      
+    it("Deve retornar a mensagem 'Incorrect email or password' quando não existe email cadastrado", async () => {
+      chaiHttpResponse = await chai.request(app).post('/login').send(loginInvalidMock);
+      
+      expect(chaiHttpResponse.status).to.be.equal(401);
+      expect(chaiHttpResponse.body).to.be.deep.equal({message: "Incorrect email or password"})
+    })
+  })
+  describe('Testa senha inexistentes', () => {
+    console.log('chegou aqui');
+    let chaiHttpResponse: Response;   
+    
+    before(async() => {
+      Sinon.stub(User, 'findOne').resolves(userDefaultMock as User)
+      Sinon.stub(bcrypt, 'compare').resolves(false)
+    });
+    after(async() => {
+        (User.findOne as Sinon.SinonStub).restore();
+      });
+    it("Deve retornar a mensagem 'Incorrect email or password' quando a senha está errada", async () => {
+      chaiHttpResponse = await chai.request(app).post('/login').send(loginWrongPassword);
+      
+      expect(chaiHttpResponse.status).to.be.equal(401);
+      expect(chaiHttpResponse.body).to.be.deep.equal({message: "Incorrect email or password"})
+    })
+  })
 })
-
 
 describe('TESTA ROTA PADRÃO /', () => {
   it("Deve retornar mensagem 'ok: true'", async () => {

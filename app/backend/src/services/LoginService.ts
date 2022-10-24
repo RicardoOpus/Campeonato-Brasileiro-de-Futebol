@@ -15,10 +15,10 @@ class LoginService {
     const user = await this._userModel.findOne({
       where: { email: loginDto.email },
     });
-    if (!user) return null;
+    if (!user) return { code: 401, data: { message: 'Incorrect email or password' } };
     const passwordHash = await bcrypt.compare(loginDto.password, user.password);
     if (!passwordHash) {
-      return null;
+      return { code: 401, data: { message: 'Incorrect email or password' } };
     }
     // Gera o token
     const jwtHeader: IJWTHeaderDto = {
@@ -29,7 +29,7 @@ class LoginService {
     };
     const tokenGenerator = new TokenGenerator();
     const token = tokenGenerator.generateJWTToken(jwtHeader);
-    return { token };
+    return { code: 200, data: { token } };
   }
 }
 

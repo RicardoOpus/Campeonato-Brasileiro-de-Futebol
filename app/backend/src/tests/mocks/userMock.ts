@@ -22,3 +22,13 @@ export const loginInvalidPassword = {
   email: 'admina@dmin.com',
   password: 'secret'
 }
+
+export const loginInvalidMock = {
+  email: 'fulano@admin.com',
+  password: 'secret_admin'
+};
+
+export const loginWrongPassword = {
+  email: 'admina@dmin.com',
+  password: 'secret_password_wrong'
+}
