@@ -28,17 +28,17 @@ class MatchController {
     res.status(code).json(data);
   }
 
-  // public editMatches: RequestHandler = async (req, res) => {
-  //   const { code, data } = await this._matchService.editMatches(req.params.id);
-  //   return res.status(code).json(data);
-  // };
+  public async editMatches(req: Request, res: Response) {
+    const { code, data } = await this._matchService.editMatches(req.params.id);
+    return res.status(code).json(data);
+  }
 
-  // updateMatches: RequestHandler = async (req, res) => {
-  //   const { id } = req.params;
-  //   const { homeTeamGoals, awayTeamGoals } = req.body;
-  //   const { code, data } = await this._matchService.updateMatches(homeTeamGoals, awayTeamGoals, id);
-  //   return res.status(code).json(data);
-  // };
+  public async updateMatches(req: Request, res: Response) {
+    const { id } = req.params;
+    const { homeTeamGoals, awayTeamGoals } = req.body;
+    const { code, data } = await this._matchService.updateMatches(homeTeamGoals, awayTeamGoals, id);
+    return res.status(code).json(data);
+  }
 }
 
 export default MatchController;

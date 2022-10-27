@@ -33,7 +33,13 @@ routes.post(
   validateToken.authenticateToken,
   (req: Request, res: Response) => matchController.crateMatches(req, res),
 );
-// routes.patch('/matches/:id/finish', matchController.editMatches);
-// routes.patch('/matches/:id', matchController.updateMatches);
+routes.patch(
+  '/matches/:id/finish',
+  (req: Request, res: Response) => matchController.editMatches(req, res),
+);
+routes.patch(
+  '/matches/:id',
+  (req: Request, res: Response) => matchController.updateMatches(req, res),
+);
 
 export default routes;

@@ -44,7 +44,7 @@ class ServiceMatch {
     const team2 = await this._teamModel.findByPk(body.awayTeam) as Team;
     if (!team1 || !team2) return { code: 404, data: { message: 'There is no team with such id!' } };
     if (body.homeTeam === body.awayTeam) {
-      return { code: 401,
+      return { code: 422,
         data: { message: 'It is not possible to create a match with two equal teams' } };
     }
     const created = await this._matchModel.create({ ...body, inProgress: true });
@@ -52,28 +52,28 @@ class ServiceMatch {
     return { code: 201, data: created };
   }
 
-  // public editMatches = async (id: string): Promise<ResponseDto> => {
-  //   const result = await this._matchModel.findByPk(id) as Match;
-  //   if (!result) {
-  //     return { code: 401, data: { message: 'Não encontrado' } };
-  //   }
-  //   await result.update({ inProgress: 'false' });
-  //   return { code: 200, data: { message: 'Finished' } };
-  // };
+  public async editMatches(id: string): Promise<ResponseDto> {
+    const result = await this._matchModel.findByPk(id) as Match;
+    if (!result) {
+      return { code: 401, data: { message: 'Não encontrado' } };
+    }
+    await result.update({ inProgress: 'false' });
+    return { code: 200, data: { message: 'Finished' } };
+  }
 
-  // public updateMatches = async (
-  //   homeTeamGoals: number,
-  //   awayTeamGoals: number,
-  //   id: string,
-  // ): Promise<ResponseDto> => {
-  //   const match = await this._matchModel.findByPk(id) as Match;
+  public async updateMatches(
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+    id: string,
+  ): Promise<ResponseDto> {
+    const match = await this._matchModel.findByPk(id) as Match;
 
-  //   // if (!match) {
-  //   //   throw new ErrorCustom(StatusCodes.BAD_REQUEST, 'non-existent match');
-  //   // }
-  //   await match.update({ homeTeamGoals, awayTeamGoals });
-  //   return { code: 200, data: { message: 'OK' } };
-  // };
+    // if (!match) {
+    //   throw new ErrorCustom(StatusCodes.BAD_REQUEST, 'non-existent match');
+    // }
+    await match.update({ homeTeamGoals, awayTeamGoals });
+    return { code: 200, data: { message: 'OK' } };
+  }
 }
 
 export default ServiceMatch;
