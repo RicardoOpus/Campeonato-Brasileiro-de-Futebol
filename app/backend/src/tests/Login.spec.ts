@@ -76,7 +76,6 @@ describe('TESTES DA ROTA /login', () => {
     })
   })
   describe('Testa senha inexistentes', () => {
-    console.log('chegou aqui');
     let chaiHttpResponse: Response;   
     
     before(async() => {

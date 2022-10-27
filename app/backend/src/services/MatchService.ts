@@ -68,9 +68,6 @@ class ServiceMatch {
   ): Promise<ResponseDto> {
     const match = await this._matchModel.findByPk(id) as Match;
 
-    // if (!match) {
-    //   throw new ErrorCustom(StatusCodes.BAD_REQUEST, 'non-existent match');
-    // }
     await match.update({ homeTeamGoals, awayTeamGoals });
     return { code: 200, data: { message: 'OK' } };
   }
