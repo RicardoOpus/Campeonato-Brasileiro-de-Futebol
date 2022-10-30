@@ -5,6 +5,7 @@ import ValidateController from './controllers/ValidateController';
 import ValidateToken from './middlewares/ValidateToken';
 import TeamController from './controllers/TeamController';
 import MatchController from './controllers/MatchController';
+import LeaderbordController from './controllers/LeaderboardController';
 
 const routes: Router = Router();
 
@@ -14,6 +15,7 @@ const validateController = new ValidateController();
 const validateToken = new ValidateToken();
 const teamController = new TeamController();
 const matchController = new MatchController();
+const leaderbordController = new LeaderbordController();
 
 routes.post(
   '/login',
@@ -40,6 +42,14 @@ routes.patch(
 routes.patch(
   '/matches/:id',
   (req: Request, res: Response) => matchController.updateMatches(req, res),
+);
+routes.get(
+  '/leaderboard/home',
+  (req: Request, res: Response) => leaderbordController.getHomeTeams(req, res),
+);
+routes.get(
+  '/leaderboard/away',
+  (req: Request, res: Response) => leaderbordController.getAwayTeams(req, res),
 );
 
 export default routes;

@@ -1,4 +1,3 @@
-// import StatusCodes from 'http-status-codes';
 import Teams from '../database/models/teams';
 import ResponseDto from '../controllers/dto/ResponseDto';
 
